@@ -21,7 +21,7 @@
     <ClCompile Include="src\Basics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Book.cpp">
+    <ClCompile Include="src\Shop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Dependencies\sqlinclude\shell.c">
@@ -30,12 +30,18 @@
     <ClCompile Include="..\Dependencies\sqlinclude\sqlite3.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Functionality.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="res\Basics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="res\Book.h">
+    <ClInclude Include="res\Shop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="res\Functionality.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

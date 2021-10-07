@@ -1,7 +1,9 @@
-#include <Book.h>
-
-// SDL way if we want to use them
-int main(int argc, char** argv)
+#include <Shop.h>
+#if _DEBUG
+#include "Basics.h"
+#include "Functionality.h"
+#endif
+int main()
 {
-	shop::run;
+	sql manage;
 }

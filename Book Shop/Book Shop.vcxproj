@@ -93,12 +93,14 @@
     <ClCompile Include="..\Dependencies\sqlinclude\shell.c" />
     <ClCompile Include="..\Dependencies\sqlinclude\sqlite3.c" />
     <ClCompile Include="src\Basics.cpp" />
-    <ClCompile Include="src\Book.cpp" />
+    <ClCompile Include="src\Functionality.cpp" />
+    <ClCompile Include="src\Shop.cpp" />
     <ClCompile Include="src\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="res\Basics.h" />
-    <ClInclude Include="res\Book.h" />
+    <ClInclude Include="res\Functionality.h" />
+    <ClInclude Include="res\Shop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
