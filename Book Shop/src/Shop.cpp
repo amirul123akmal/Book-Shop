@@ -23,7 +23,7 @@ namespace shop
 				switch (manage.adminMenu())
 				{
 				case 5:
-					goto again;
+					goto restart;
 				}
 				break;
 			case 2:
