@@ -5,5 +5,5 @@
 #endif
 int main()
 {
-	sql manage;
+	shop::run();
 }

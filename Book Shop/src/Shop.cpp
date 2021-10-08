@@ -19,21 +19,18 @@ namespace shop
 			case 0:
 				goto again;
 			case 1:
+				// Credential Successfull
 				switch (manage.adminMenu())
 				{
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				default:
-					break;
+				case 5:
+					goto again;
 				}
 				break;
 			case 2:
 				goto restart;
 			}
+			break;
+		case 100:
 			break;
 		default:
 			goto restart;

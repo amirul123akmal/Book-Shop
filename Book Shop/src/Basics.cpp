@@ -76,6 +76,7 @@ namespace basic
 			{
 				printColor(" " + theTable[i][j], j + 4);
 			}
+			CONSOLE("");
 		}
 	}
 }
