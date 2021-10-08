@@ -28,6 +28,10 @@ bool sql::intSwitch(const int& user)
 		flag = true;
 		delCat();
 		break;
+	case 5:
+		// For exit only
+		flag = true;
+		break;
 	}
 	return flag;
 }
@@ -124,6 +128,8 @@ int sql::adminMenu()
 	printf(":");
 	std::getline(std::cin, choices);
 	int switches = std::stoi(choices);
+	if (choices == "5")
+		return switches;
 	switch (switches)
 	{
 	case 1:
