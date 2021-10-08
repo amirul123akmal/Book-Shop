@@ -15,7 +15,7 @@ private:
 	int col = 0;
 	int counter = 0;
 private:
-	void getData();
+	void getData(const std::string& cmd);
 	void getTableData(const std::string& tableName);
 	int farthestID();
 	bool intSwitch(const int& user);

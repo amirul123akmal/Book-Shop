@@ -64,25 +64,12 @@ void sql::getTableData(const std::string& tableName)
 {
 	table.clear();
 	command = "SELECT  *  FROM " + tableName + " ;";
-	int test;
 	sqlite3_exec(db, command.c_str(), callback, reinterpret_cast<void*>(this), NULL);
 }
-void sql::getData()
+void sql::getData(const std::string& cmd)
 {
 	table.clear();
-	counter = 0;
-	column.clear();
-	col = sqlite3_column_count(execution);
-	while (sqlite3_column_text(execution, counter++))
-	{
-		column.clear();
-		for (int i = 0; i < col; i++)
-		{
-			column.push_back(std::string((char*)(sqlite3_column_text(execution, i))));
-		}
-		table.push_back(column);
-		sqlite3_step(execution);
-	}
+	sqlite3_exec(db, cmd.c_str(), callback, reinterpret_cast<void*>(this), NULL);
 }
 
 int sql::farthestID()
@@ -116,10 +103,8 @@ int sql::adminLogin()
 		return 2;
 	}
 	command = "SELECT * FROM login WHERE name = " + quoting(name) +" and pass = " + quoting(pass) + ";";
-	sqlite3_prepare(db, command.c_str(), -1, &execution, NULL);
-	sqlite3_step(execution);
-	getData();
-	if (counter == 1) 
+	getData(command);
+	if (table.size() == 0) 
 	{
 		basic::printColor("The login Credential does not exist in database", 1);
 		basic::stop();
