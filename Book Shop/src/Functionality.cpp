@@ -30,6 +30,27 @@ bool sql::intSwitch(const int& user)
 	return flag;
 }
 
+// Special way move data from callback to sql class
+// start
+// link:
+// http://www.cplusplus.com/forum/beginner/278102/#msg1200491
+int callback(void* link, int numCols, char **rowData, char**colName)
+{
+	return reinterpret_cast<sql*>(link)->callbackClass(NULL, numCols, rowData, colName);
+}
+
+int sql::callbackClass(void* data, int argc, char** argv, char**)
+{
+	column.clear();
+	for (int i = 0;i < argc ; i++)
+	{
+		column.push_back(argv[i]);
+	}
+	table.push_back(column);
+	return 0;
+}
+//end
+
 sql::sql()
 {
 	sqlite3_open("shop.db", &db);
@@ -42,21 +63,9 @@ sql::~sql()
 void sql::getTableData(const std::string& tableName)
 {
 	table.clear();
-	command = "SELECT * FROM " + quoting(tableName) + ";";
-	sqlite3_prepare(db, command.c_str(), -1, &execution, NULL);
-	sqlite3_step(execution);
-	col = sqlite3_column_count(execution);
-	counter = 0;
-	while (sqlite3_column_text(execution, counter++))
-	{
-		column.clear();
-		for (int i = 0 ; i < col; i++)
-		{
-			column.push_back(std::string((char*)(sqlite3_column_text(execution, i))));
-		}
-		table.push_back(column);
-		sqlite3_step(execution);
-	}
+	command = "SELECT  *  FROM " + tableName + " ;";
+	int test;
+	sqlite3_exec(db, command.c_str(), callback, reinterpret_cast<void*>(this), NULL);
 }
 void sql::getData()
 {
