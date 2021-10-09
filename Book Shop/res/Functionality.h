@@ -73,7 +73,7 @@ public:
 	int addData(const std::string& leTable);
 	int dataChangeName(const std::string& whichTable);
 	int dataChangeQuantity(const std::string& leTable);
-	int dataDel();
+	int dataDel(const std::string& leTable);
 public:
 	// All menu related
 	int menu();

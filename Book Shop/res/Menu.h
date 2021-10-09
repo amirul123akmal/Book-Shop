@@ -24,4 +24,6 @@ namespace menu
 	/// </summary>
 	void editDataTable();
 
+	void reqIdwithExit();
+
 }

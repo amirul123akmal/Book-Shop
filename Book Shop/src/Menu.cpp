@@ -19,7 +19,7 @@ namespace menu
 
 	void addDataField()
 	{
-		basic::printColor("Enter 'aaa' in any of these to exit this case", 13);
+		basic::printColor("\nEnter 'aaa' in any of these Inputs to exit this case", 13);
 		basic::printColor("\nYou'll need to enter: ", 12);
 		basic::printColor("\n1. Name of the items"
 						  "\n2. Quantity of the iem"
@@ -28,10 +28,17 @@ namespace menu
 
 	void editDataTable()
 	{
-		basic::printColor("\n1. Edit Data Name", 11);
-		basic::printColor("\n2. Edit Quantity", 11);
-		basic::printColor("\n3. Delete Row", 8);
-		basic::printColor("\n4. Exit", 10);
+		basic::printColor("\n1. Add Data", 11);
+		basic::printColor("\n2. Edit Data Name", 11);
+		basic::printColor("\n3. Edit Quantity", 11);
+		basic::printColor("\n4. Delete Row", 8);
+		basic::printColor("\n5. Exit", 10);
 		basic::printColor("\nChoices : ", 9);
 	}	
+
+	void reqIdwithExit()
+	{
+		basic::printColor("\nEnter 'aaa' at id input to exit", 4);
+		basic::printColor("\nPlease select the ID that you want to change: ", 2);
+	}
 }
