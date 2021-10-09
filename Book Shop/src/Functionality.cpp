@@ -1,9 +1,5 @@
 #include "Functionality.h"
 
-std::string quoting(const std::string& sentence)
-{
-	return std::string("'") + sentence + std::string("'");
-}
 // intDependent = Internal Dependent
 void intDependent(int start)
 {
@@ -68,12 +64,12 @@ void sql::getTableData(const std::string& tableName)
 {
 	table.clear();
 	command = "SELECT  *  FROM " + tableName + " ;";
-	sqlite3_exec(db, command.c_str(), callback, reinterpret_cast<void*>(this), NULL);
+	sqlite3_exec(db, command.c_str(), callback, ENABLED_STORE, NULL);
 }
 void sql::getData(const std::string& cmd)
 {
 	table.clear();
-	sqlite3_exec(db, cmd.c_str(), callback, reinterpret_cast<void*>(this), NULL);
+	sqlite3_exec(db, cmd.c_str(), callback, ENABLED_STORE, NULL);
 }
 int sql::farthestID()
 {
@@ -87,9 +83,7 @@ int sql::farthestID()
 int sql::menu()
 {
 	basic::clear();
-	basic::printColor("Welcome to UiTM Book Shop's\n", 11);
-	basic::printColor("1. Buy\n", 2);
-	basic::printColor("2. Admin Login\n", 2);
+	menu::EnterProgram();
 	std::getline(std::cin, choices);
 	return std::stoi(choices);
 }
@@ -105,7 +99,7 @@ int sql::adminLogin()
 	{
 		return 2;
 	}
-	command = "SELECT * FROM login WHERE name = " + quoting(name) +" and pass = " + quoting(pass) + ";";
+	command = "SELECT * FROM login WHERE name = " + basic::quoting(name) +" and pass = " + basic::quoting(pass) + ";";
 	getData(command);
 	if (table.size() == 0) 
 	{
@@ -161,13 +155,13 @@ void sql::addCat()
 	id = farthestID();
 	id++;
 	command = "INSERT INTO categories VALUES("
-		+quoting(std::to_string(id)) + ","
-		+ quoting(name) + ");";
+		+basic::quoting(std::to_string(id)) + ","
+		+ basic::quoting(name) + ");";
 	sqlite3_exec(db, command.c_str(), callback, NULL, NULL);
 
 	// Create table for each category
 	command = "CREATE TABLE " 
-		+ quoting(name) + 
+		+ basic::quoting(name) + 
 		"("
 		"id INT PRIMARY KEY NOT NULL,"
 		"name TEXT NOT NULL,"
@@ -176,29 +170,143 @@ void sql::addCat()
 		");";
 	sqlite3_exec(db, command.c_str(), callback, NULL, NULL);
 }
-void sql::editCat()
+int sql::editCat()
 {
+	std::string alterTable{};
+	here:
 	basic::clear();
 	getTableData("categories");
 	basic::printTable(table);
-	basic::printColor("\nYou may only update the name only", 4);
-	basic::printColor("\nPlease select the ID that you want to change: ", 2);
-	std::getline(std::cin, name);
-	basic::printColor("\nNew Name: ", 2);
-	std::getline(std::cin, pass);
-	id = std::stoi(name);
-	user = table[id-1][1]; // save old name
-	command = "UPDATE categories SET category = " 
-		+ quoting(pass) + " WHERE id = "
-		+ quoting(name) + ";";
+	menu::editCat();
+	std::getline(std::cin, user);
+	if (user == "3")
+		return 1;
+	basic::printColor("\nWhich Category do you want to change : ", 2);
+	std::getline(std::cin, alterTable);
+	switch (std::stoi(user))
+	{
+	case 1:
+		changeCatName(alterTable);
+		break;
+	case 2:
+		editCatData(alterTable);
+		break;
+	default:
+		break;
+	}
+	goto here;
+	
+}
+int sql::delCat()
+{
+	basic::clear();
+	basic::printTable(table);
+	basic::printColor("\nEnter 'aaa' to exit");
+	basic::printColor("\nWhich category do you want to remove : ", 2);
+	std::getline(std::cin, user);
+	if (user == "aaa")
+		return 0;
+	command = "DELETE TABLE categories WHERE category = "
+		+ basic::quoting(user)  + ";";
 	sqlite3_exec(db, command.c_str(), callback, NULL, NULL);
-	command = "ALTER TABLE "
-		+ quoting(user) + " RENAME TO " 
-		+ quoting(pass) + ";";
+	command = "DROP TABLE "+
+		basic::quoting(user) + ";";
 	sqlite3_exec(db, command.c_str(), callback, NULL, NULL);
 }
 
-void sql::delCat()
+int sql::changeCatName(const std::string& whichTable)
+{
+	basic::clear();
+	basic::printColor("\nTable that you want to change name : "+whichTable, 10);
+	basic::printColor("\nEnter 'aaa' at input to exit", 4);
+	basic::printColor("\nNew Name: ", 2);
+	std::getline(std::cin, pass);
+	if (pass == "aaa")
+		return 0;
+	command = "UPDATE categories SET category = "
+		+ basic::quoting(pass) + " WHERE category = "
+		+ basic::quoting(whichTable) + ";";
+	sqlite3_exec(db, command.c_str(), callback, NULL, NULL);
+	command = "ALTER TABLE "
+		+ basic::quoting(whichTable) + " RENAME TO "
+		+ basic::quoting(pass) + ";";
+	sqlite3_exec(db, command.c_str(), callback, NULL, NULL);
+	return 1;
+}
+
+int sql::editCatData(const std::string& whichTable)
+{
+	home:
+	basic::clear();
+	getTableData(whichTable);
+	basic::printTable(table);
+	menu::editDataTable();
+	std::getline(std::cin, user);
+	if (user == "4")
+		return 0;
+	switch (std::stoi(user))
+	{
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	default:
+		break;
+	}
+	goto home;
+	return 1;
+
+}
+
+int sql::addData(const std::string& leTable)
+{
+	// Field:
+	// ID, name, quantity, price
+	basic::clear();
+	std::string uName{}, uQuan{}, uPrice{};
+	menu::addDataField();
+	id = farthestID();
+	basic::printColor("\nName: ", 2);
+	std::getline(std::cin, uName);
+	basic::printColor("\nQuantity: ", 2);
+	std::getline(std::cin, uQuan);
+	basic::printColor("\nPrice: ", 2);
+	std::getline(std::cin, uPrice);
+	if (uName == "aaa" || uQuan == "aaa" || uPrice == "aaa")
+		return 0;
+	command = "INSERT INTO "
+		+ basic::quoting(leTable) + "VALUES("
+		+ basic::quoting(std::to_string(++id)) +","
+		+ basic::quoting(uName) + ","
+		+ basic::quoting(uQuan) + ","
+		+ basic::quoting(uPrice) + ");"
+		;
+	sqlite3_exec(db, command.c_str(), callback, NULL, NULL);
+	return 1;
+}
+int sql::dataChangeName(const std::string& whichTable)
+{
+	basic::clear();
+	basic::printTable(table);
+	basic::printColor("\nEnter 'aaa' at id input to exit", 4);
+	basic::printColor("\nPlease select the ID that you want to change: ", 2);
+	std::getline(std::cin, pass);
+	if (pass == "aaa")
+		return 0;
+	basic::printColor("\nPlease enter the new name: ", 2);
+	std::getline(std::cin, user);
+	command = "UPDATE "
+		+ basic::quoting(whichTable) + "SET name = "
+		+ basic::quoting(user) + "WHERE id = "
+		+ basic::quoting(pass) + ";";
+	sqlite3_exec(db, command.c_str(), callback, NULL, NULL);
+	return 1;
+}
+int sql::dataChangeQuantity(const std::string& leTable)
 {
 
 }

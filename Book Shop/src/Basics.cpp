@@ -79,4 +79,8 @@ namespace basic
 			CONSOLE("");
 		}
 	}
+	std::string quoting(const std::string& sentence)
+	{
+		return std::string("'") + sentence + std::string("'");
+	}
 }

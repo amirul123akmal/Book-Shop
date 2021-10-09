@@ -1,4 +1,7 @@
 #include "Basics.h"
+#include "Menu.h"
+
+#define ENABLED_STORE reinterpret_cast<void*>(this)
 
 class sql
 {
@@ -57,9 +60,20 @@ public:
 public:
 	// All function for the menu related
 	bool allCat();
-	void editCat();
+	int editCat();
 	void addCat();
-	void delCat();
+	int delCat();
+
+	// Admin Edit Category
+	int changeCatName(const std::string& whichTable);
+	int editCatData(const std::string& whichTable);
+
+	// Admin sub-func for : 
+	// int editCatData();
+	int addData(const std::string& leTable);
+	int dataChangeName(const std::string& whichTable);
+	int dataChangeQuantity(const std::string& leTable);
+	int dataDel();
 public:
 	// All menu related
 	int menu();

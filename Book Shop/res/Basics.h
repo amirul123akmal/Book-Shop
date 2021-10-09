@@ -28,4 +28,6 @@ namespace basic
 	void printColor(std::string sentences, int color);
 
 	void printTable(const std::vector<std::vector<std::string>>& theTable);
+
+	std::string quoting(const std::string& sentence);
 }
