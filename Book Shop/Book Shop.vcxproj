@@ -93,6 +93,7 @@
     <ClCompile Include="..\Dependencies\sqlinclude\shell.c" />
     <ClCompile Include="..\Dependencies\sqlinclude\sqlite3.c" />
     <ClCompile Include="src\Basics.cpp" />
+    <ClCompile Include="src\Customer.cpp" />
     <ClCompile Include="src\Functionality.cpp" />
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Shop.cpp" />
@@ -100,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="res\Basics.h" />
+    <ClInclude Include="res\Customer.h" />
     <ClInclude Include="res\Functionality.h" />
     <ClInclude Include="res\Menu.h" />
     <ClInclude Include="res\Shop.h" />

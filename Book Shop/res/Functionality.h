@@ -1,14 +1,11 @@
 #include "Basics.h"
 #include "Menu.h"
 
-#define ENABLED_STORE reinterpret_cast<void*>(this)
-
 class sql
 {
 	// Start Private Member
 private:
 	sqlite3* db = NULL;
-	sqlite3_stmt* execution = NULL;
 	std::string command = "";
 	std::string choices{};
 	std::string name{}, pass{};

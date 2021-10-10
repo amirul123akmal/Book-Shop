@@ -57,7 +57,6 @@ sql::sql()
 }
 sql::~sql()
 {
-	sqlite3_finalize(execution);
 	sqlite3_close(db);
 }
 void sql::getTableData(const std::string& tableName)
@@ -85,6 +84,8 @@ int sql::menu()
 	basic::clear();
 	menu::EnterProgram();
 	std::getline(std::cin, choices);
+	if (choices == "")
+		return 1000;
 	return std::stoi(choices);
 }
 int sql::adminLogin()

@@ -1,18 +1,24 @@
 #include "Basics.h"
 #include "Shop.h"
 #include "Functionality.h"
+#include "Customer.h"
 
 namespace shop
 {
 	void run()
 	{
 		sql manage;
+		vst cust;
 	restart:
 		switch (manage.menu())
 		{
 		case 1:
+			// For Customers
+			cust.displayAllItem();
+			goto restart;
 			break;
 		case 2:
+			// For Admin
 			again:
 			switch (manage.adminLogin())
 			{

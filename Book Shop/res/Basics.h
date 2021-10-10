@@ -1,13 +1,22 @@
+// C++
 #include <iostream>
 #include <string>
 #include <vector>
 
+// C
 #include <stdio.h>
 
+// External
 #include <sqlite3.h>
 
+// UTILITIES
+#define ENABLED_STORE reinterpret_cast<void*>(this)
 #define CONSOLE(x) std::cout << x << std::endl
 #define LOG(x) std::cout << x
+
+// SHORT typename
+typedef std::vector<std::vector<std::string>> sqlTable;
+typedef std::vector<std::string> sqlRow;
 
 namespace basic
 {

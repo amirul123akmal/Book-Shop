@@ -68,7 +68,7 @@ namespace basic
 		// reset
 		printf("\033[0;37m");
 	}
-	void printTable(const std::vector<std::vector<std::string>>& theTable)
+	void printTable(const sqlTable& theTable)
 	{
 		for (int i = 0 ; i < theTable.size() ; i++)
 		{
